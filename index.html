@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="container">
+        <section class="text-center">
+            <article class="input-group InputField">
+                <input type="text" name="Dhaka" class="form-control" placeholder="Enter city name..." id="cityInput">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary button" type="button" id="search">Search</button>
+                </div>
+            </article>
+            <article>
+                <output style="font-size: 40px; color:#000000; margin-left: 10%;" id="CityNameShow"></output>
+                <img style="width: 20%; height: 20%;" id="iconShow">
+            </article>
+
+            <article>
+                <output style="font-size: 17px;color:#000000;"><span style="font-size: 47px; color:#000000;"
+                        id="TempShow"></span>&deg;C</output>
+            </article>
+            <article>
+                <output style="font-size: 24px; color:#000000;" id="StatusShow"></output>
+            </article>
+        </section>
+    </section>
+
+    <script>
+        apiCall('Dhaka');
+        document.getElementById('search').addEventListener('click', function () {
+            const cityName = document.getElementById('cityInput').value;
+            if (cityName === "") {
+                alert("Please Enter Input Correctly");
+            }
+            else {
+                apiCall(cityName);
+            }
+        });
+
+        function apiCall(cityName) {
+            const key = "bb23e99a66c22ec8e7ea01af926a31db";
+            const city = cityName;
+            fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${key}`)
+                .then((response) => response.json())
+                .then((json) => callWeatherSet(json))
+        }
+
+        function callWeatherSet(weatherData) {
+
+            if (weatherData.name == undefined) {
+                alert(`Please Enter Input Correctly`);
+            }
+            else {
+                document.getElementById('CityNameShow').innerText = weatherData.name;
+                document.getElementById('iconShow').setAttribute('src', `https://openweathermap.org/img/wn/${weatherData.weather[0].icon}@2x.png`);
+                document.getElementById('TempShow').innerText = weatherData.main.temp;
+                document.getElementById('StatusShow').innerText = weatherData.weather[0].main;
+            }
+            document.getElementById('cityInput').value = "";
+        }
+
+    </script>
+</body>
+
+</html>
