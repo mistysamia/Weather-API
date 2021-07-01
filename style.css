@@ -3,13 +3,16 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
 }
+h1{
+    color: seashell;
+}
+
 .button{
     color: black;
     background-color: red;
 }
 .InputField{
-    margin-top:17%;
+    margin-top:7%;
     width:50%; 
     margin-left:27%;
- 
 }
